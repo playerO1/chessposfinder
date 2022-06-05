@@ -1,0 +1,48 @@
+[Event "Test games"]
+[Date "2022.06.04"]
+[White "test1"]
+[Black "test2"]
+[Result "1-0"]
+[WhiteElo "500"]
+[BlackElo "500"]
+
+1. e4 b6 2. d4 d6 3. Nc3 Nc6 4. d5 Qd7 5. dxc6 Qxc6 6. Bb5 Qxb5 7. Nxb5 Bb7 8. Nxc7+ Kd8 9. Nxa8 e5 1-0
+
+[Event "Test game"]
+[Date "2022.06.04"]
+[White "test1"]
+[Black "test2"]
+[Result "1-0"]
+[WhiteElo "500"]
+[BlackElo "500"]
+
+1.c4 g6 2.d4 Bg7 3.e4 d6 4.Nc3 c5 5.dxc5 Bxc3+ 6.bxc3 dxc5 7.Bd3 Nc6 8.f4 Qa5
+9.Ne2 Be6 10.f5 O-O-O 11.fxe6 Ne5 12.exf7 Nf6 13.O-O Nxd3 14.Bh6 Ne5 15.Qb3 Nxf7  1-0
+
+[Event "Test game"]
+[Date "2022.06.04"]
+[White "test1"]
+[Black "test2"]
+[Result "1-0"]
+[WhiteElo "500"]
+[BlackElo "500"]
+
+e4 f6 Qe2 g5 Qh5# 1-0
+
+f3 e6 g4 Qh4# 0-1
+
+1.d4 Nf6 2.Nf3 Ne4 3.e3 e6 4.Nbd2 Bb4 5.c3 Nc6 6.Nxe4 Qh4 7.Nxh4 b6 8.cxb4 Ba6 9.Bxa6 Ne5 10.dxe5 Rc8 11.Bxc8 h5 12.Qxd7+ 1-0
+
+1. b3 d5 2. a4 Nf6 3. Ba3 e5 4. f3 Bxa3 5. Nxa3 Nc6 6. g4 Be6 7. Nh3 Qd6 8. Bg2 O-O-O 9. d3 d4 10. O-O h6 11. Qd2 g5 12. Nb5 Qb4 13. Qxb4 Nxb4 14. c4 Nc2 15. Rac1 Ne3 16. Rfe1 Rd6 17. c5 1/2-1/2
+
+1.d4 Nf6 2.Nf3 Ne4 3.e3 e6 4.Nbd2 Bb4 5.c3 Nc6 6.Nxe4 Qh4 7.Nxh4 b6 8.cxb4 Ba6 9.Bxa6 Ne5 10.dxe5 Rc8 11.Bxc8 h5 1-0
+
+1.d4 Nf6 2.Nf3 Ne4 3.e3 e6 4.Nbd2 Bb4 5.c3 Nc6 6.Nxe4 Qh4 7.Nxh4 b6 8.cxb4 Ba6 9.Bxa6 Ne5 10.dxe5 Rc8 11.Bxc8 h5 12.Qxd7+ 0-1
+
+1.d4 Nf6 2.Nf3 Ne4 3.e3 e6 4.Nbd2 Bb4 5.c3 Nc6 6.Nxe4 Qh4 7.Nxh4 b6 8.cxb4 Ba6 9.Bxa6 Ne5 10.dxe5 Rc8 11.Bxc8 h5 0-1
+
+1.d4 Nf6 2.Nf3 Ne4 3.e3 e6 4.Nbd2 Bb4 5.c3 Nc6 6.Nxe4 Qh4 7.Nxh4 b6 8.cxb4 Ba6 9.Bxa6 Ne5 10.dxe5 Rc8 11.Bxc8 h5 12.Qxd7+ 1/2-1/2
+
+1.d4 Nf6 2.Nf3 Ne4 3.e3 e6 4.Nbd2 Bb4 5.c3 Nc6 6.Nxe4 Qh4 7.Nxh4 b6 8.cxb4 Ba6 9.Bxa6 Ne5 10.dxe5 Rc8 11.Bxc8 h5 1/2-1/2
+
+
