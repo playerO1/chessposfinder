@@ -73,12 +73,11 @@ def match_koef_razmen_any(pos, end_is):
     return len(cellN)
 
 #todo : максимальное колебание "оценок"
-#todo : победа с большим перевесом фигур (победил с меньшим числом фигур)
 
 # find position with max value of funct()
 def scanAllPosition(hist,end_is, funct): # hist=_parse_single_pgn(gameFEN), funct=match_koef_razmen_any(pos)
     i=0
-    maxV=0
+    maxV=float('-inf')
     maxI=0
     for p,m in hist:
         i=i+1
@@ -98,7 +97,7 @@ def scanMaxLength(hist,end_is): # самая длинная игра
 
 def match_disbalance(pos, end_is):
     #def scoreDiff(pos): #наибольшая разница по фигурам. Чем больше тем невероятнее победа. ПРОВЕРИТЬ зависимость от цвета!
-    price={'p':1,'r':4,'n':3,'b':3,'q':5,'k':0,   'P':-1,'R':-4,'N':-3,'B':-3,'Q':-5,'K':0, }
+    price={ 'p':1,'r':4,'n':3,'b':3,'q':5,'k':0,   'P':-1,'R':-4,'N':-3,'B':-3,'Q':-5,'K':0 }
     # tools.get_color(pos)
     # sunfish.piece
     v=0
@@ -125,7 +124,25 @@ def scanFinishPosition(hist,end_is, funct): # самая последняя по
     v = funct(lastP, end_is)
     return v, lastI
 
-#todo def scanFinishPosition(hist,end_is, funct, n=4): #def scanAllPosition(hist,end_is, funct): 
+def scanLastNPosition(hist,end_is, funct, n:int=1): # hist=_parse_single_pgn(gameFEN), funct=match_koef_razmen_any(pos)
+    maxV=float('-inf')
+    maxI=0
+    lastNP=[]
+    size=0
+    for p,m in hist:
+        size=size+1
+        lastNP.append(p)
+        if len(lastNP)>n: lastNP.pop(0)
+    i=size-len(lastNP)
+    #print(i, " ", size, len(lastNP))
+    for p in lastNP:
+        i=i+1
+        val=funct(p,end_is)
+        if val>maxV:
+            maxV=val
+            maxI=i
+    #print("max=",maxV," at ", maxI)
+    return maxV, maxI
 
 # --------------------------
 
@@ -170,7 +187,7 @@ def _parse_single_pgn_result(line):
 
 
 # funct: val, moveI = scanAll(hist, funct)
-def process_file_PGN(file_name, funct):
+def process_file_PGN(file_name, funct, ignore_withdraw=False):
     lI=0
     current_game_meta = ""
     current_game_line = ""
@@ -206,10 +223,10 @@ def process_file_PGN(file_name, funct):
                 #print(lI,">>>",line)
                 #continue
                 if len(line)<6: continue # сразу сдались
-                if not('1-0' in line or '0-1' in line): continue # без ничьих
                 try:
-                    hist=_parse_single_pgn(line)
                     end_is = _parse_single_pgn_result(line)
+                    if ignore_withdraw and end_is==3: continue # без ничьих
+                    hist=_parse_single_pgn(line)
                     #todo parse result: WHITE 1-0 , BLACK  0-1 NONE 1/2-1/2
                     val, moveI = funct(hist, end_is) #scanAll(hist, funct)
                     print(lI,"\t",moveI,"\t",val,'\t', line) # todo Do print current_game_meta?
@@ -249,8 +266,10 @@ def main():
     # functGame = scanMaxLength # lambda hist, end_is: len(hist)  #самая долгая игра
     
     functGame=lambda hist, end_is: scanFinishPosition(hist, end_is, match_disbalance)
+    #functGame=lambda hist, end_is: scanLastNPosition(hist, end_is, match_disbalance, 5)
     
-    maxI,maxIM,maxV,maxL = process_file_PGN(file_name, functGame)
+    
+    maxI,maxIM,maxV,maxL = process_file_PGN(file_name, functGame) #, ignore_withdraw=True
     if maxI<=0:
         print('--- no games ---')
         return

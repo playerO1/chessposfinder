@@ -133,11 +133,17 @@ pgn="1.d4 Nf6 2.Nf3 Ne4 3.e3 e6 4.Nbd2 Bb4 5.c3 Nc6 6.Nxe4 Qh4 7.Nxh4 b6 8.cxb4 
 hist,end_of_game = chessposfinder._parse_single_pgn(pgn),chessposfinder._parse_single_pgn_result(pgn)
 check_equals((10.5,22), chessposfinder.scanFinishPosition(hist, end_of_game, chessposfinder.match_disbalance), 'Math of game, 7.8')
 
+print("Test scanLastNPosition() and match_disbalance() 7.100 чёрные отдают все фигуры и проигрывают - но объявляется ничья, белые на ход раньше, ходбелых")
+pgn="1.d4 Nf6 2.Nf3 Ne4 3.e3 e6 4.Nbd2 Bb4 5.c3 Nc6 6.Nxe4 Qh4 7.Nxh4 b6 8.cxb4 Ba6 9.Bxa6 Ne5 10.dxe5 Rc8 11.Bxc8 h5 1/2-1/2"
+hist,end_of_game = chessposfinder._parse_single_pgn(pgn),chessposfinder._parse_single_pgn_result(pgn)
+check_equals((10.5,22), chessposfinder.scanLastNPosition(hist, end_of_game, chessposfinder.match_disbalance, n=5), 'Math of game, 7.100')
+#todo test 7.100 сделать игру с перевесом фигур в центреигры, чтобы результат отличался от 7.8.
+
 
 print("Test scanAllPosition() and match_koef_razmen_any() 8.1 нет рзмена - сразумат")
 pgn="f3 e6 g4 Qh4# 0-1"
 hist,end_of_game = chessposfinder._parse_single_pgn(pgn),chessposfinder._parse_single_pgn_result(pgn)
-check_equals((0,0), chessposfinder.scanAllPosition(hist, end_of_game, chessposfinder.match_koef_razmen_any), 'Math of game, 8.1')
+check_equals((0,1), chessposfinder.scanAllPosition(hist, end_of_game, chessposfinder.match_koef_razmen_any), 'Math of game, 8.1')
 
 print("Test scanAllPosition() and match_koef_razmen_any() 8.2 ...")
 pgn="1.d4 Nf6 2.Nf3 Ne4 3.e3 e6 4.Nbd2 Bb4 5.c3 Nc6 6.Nxe4 Qh4 7.Nxh4 b6 8.cxb4 Ba6 9.Bxa6 Ne5 10.dxe5 Rc8 11.Bxc8 h5 1-0"
