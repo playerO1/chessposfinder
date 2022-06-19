@@ -199,7 +199,7 @@ def process_file_PGN(file_name, funct, ignore_withdraw=False):
     maxL=None
     total_games_success=0
     total_games_errors=0
-    with open(file_name, newline='') as lines: #fixme UnicodeDecodeError: 'utf-8' codec can't decode byte 0xed in position 1055: invalid continuation    byte    open(filename, encoding="latin-1") ?
+    with open(file_name, newline='', encoding="windows-1251") as lines: #fixme UnicodeDecodeError: 'utf-8' codec can't decode byte ...: invalid continuation byte    May be set encoding open(filename, encoding="latin-1") ?
         is_game=False
         for line in lines:
             lI=lI+1
