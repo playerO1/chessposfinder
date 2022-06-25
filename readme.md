@@ -122,3 +122,5 @@ You can download same PGN from:
 ### Sunfish library
 Sunfish is a simple chess engine, written in Python. See [Sunfish on github](https://github.com/thomasahle/sunfish/).
 
+## License
+This software (chessposfinder) distributed under [MIT license](LICENSE.txt). &copy; playerO1 2022
