@@ -86,6 +86,9 @@ Single PGN game parsed by modified from sunfish function ''. Single PGN item par
 * startall.sh - the Linux bash script for run multiply instances of chessposfinder.py for process many files.
 * startall.cmd - the Windows batch script for run multiply instances of chessposfinder.py for process many files.
 
+* chess_coast_tool.py - usefull utilite for convert PGN file into CSV and grab simple game statistic. It is another simple project, not same as chessposfinder.
+* chess_coast_tool_test.py - unit-test for chess_coast_tool_test.py.
+
 
 ## Improvement what you search
 You can modify this programm for change search criteria.
@@ -112,12 +115,34 @@ The position measure function:
 * def match_disbalance(pos, end_is):
 
 
+# Analyze PGN as table data with chess_coast_tool_test.py
+Based on *chessposfinder.py* be make *chess_coast_tool.py* - the tool for convert PGN file into CSV file with statistic information. It will be useful for 'table processor' analyze or use external math tool for analyze big data.
+Command for start:
+
+    python3 chess_coast_tool.py sample_file_from_lichess_monthly-blitz.pgn data_out.csv
+    
+## Improvement
+
+See data collection function choose code:
+
+    #The sort of collect data of the game:    
+    #functGame=lambda hist: scanFinishPosition(hist, aggregate_count) # get last position, count of figure
+    #functGame=scanCoastSumm # scan all positions, average figure by timeline
+    functGame=scanMoveCount #Scan count of move
+
+## Research result
+
+"Pre-print" result on 30.01.2022:
+
+1. The wining is not depends of number of moving figure.
+2. Classic figure weight is near true.
+
+
 # Usefull links
 You can download same PGN from:
 
 * [www.lichess.org](https://www.lichess.org) - free chess, has big open database, easy search by player orchallenge
 * [www.pgnmentor.com](https://www.pgnmentor.com) - chess programm and chess start games collection.
-
 
 ### Sunfish library
 Sunfish is a simple chess engine, written in Python. See [Sunfish on github](https://github.com/thomasahle/sunfish/).
