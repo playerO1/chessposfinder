@@ -1,5 +1,5 @@
 #
-# Chess find interesting games. Database tool for : import andexport local database, for fast find games.
+# Chess find interesting games, collect game stats. Database tool for : import andexport local database, for fast find games.
 # (C) A.K. 2022 
 # 22.05.2022, 27.11.2022
 #
@@ -99,6 +99,8 @@ def scanMoveCount(hist):
 # maked by rewrite tools.py (sunfish)
 #import re
 def _parse_single_pgn(lines):
+    #TODO lichessformat: "1. e4 b6 2. d4 d6 3. Nc3" but can be another format: "1.e4 b6 2.d4 d6 3.Nc3" - to do work with him.
+    #if (parts.substring(1,3)!="1. "...parts
     parts = lines.split() #re.sub('{.*?}', '', ' '.join(lines)).split()
     msans = [part for part in parts if not part[0].isdigit()]
     pos0 = tools.parseFEN(tools.FEN_INITIAL)
@@ -144,7 +146,8 @@ import re #reg expression
 def parse_game_data(meta_str, lineN:int, pgn_str):
     gdata=GData()
     gdata.line=lineN
-    gdata.pgn=pgn_str.replace('\n', ' ') #TODO space or empty for new line? It may be trouble when parsed next
+    gdata.pgn=pgn_str.replace('\r\n', ' ').replace('\n\r', ' ') #TODO space or empty for new line? It may be trouble when parsed next
+    #print("debug PGN:", gdata.pgn)
     #s='[White "hadwao"]'
     if match := re.search('\[White "(.*)"\]', meta_str, re.IGNORECASE):
         gdata.name_W = match.group(1)
@@ -181,9 +184,10 @@ def parse_game_data(meta_str, lineN:int, pgn_str):
 def process_file_PGN(file_name, funct):
     lI=0
     current_game_meta = ""
+    current_pgn_multiline = ""
     prev_meta=False
     #print("line\tmove\tvalue")
-    maxL=None
+    #maxL=None
     total_games_success=0
     total_games_errors=0
     
@@ -191,36 +195,48 @@ def process_file_PGN(file_name, funct):
         for line in lines:
             lI=lI+1
             #print(lI)#,'="',line,'"', len(line))
+            has_empty=False
             if line.startswith('['):
                 current_game_meta = current_game_meta + line
                 prev_meta=True
+                if (len(current_pgn_multiline)>1):
+                    raise# new Error("Wrong line pgn format. Not finish parsed: "+current_pgn_multiline)
             elif len(line)<3 or not line[0].isdigit():
-                pass
+                has_empty=True;
+                #pass
             else:
+                if len(current_pgn_multiline)>0:
+                    current_pgn_multiline=current_pgn_multiline+" "
+                current_pgn_multiline = current_pgn_multiline + line #for multiline
+
+            if (has_empty and len(current_pgn_multiline)>1): #TODO if end line is not empty?
                 #if len(line)<6: continue # сразу сдались
                 #if not('1-0' in line or '0-1' in line): continue # без ничьих
-                gdata = parse_game_data(current_game_meta, lI, line);
+                gdata = parse_game_data(current_game_meta, lI, current_pgn_multiline);
+                #print("debug PGN game:", gdata.pgn)
+                current_pgn_multiline=""
+                has_empty=False
+                if prev_meta:
+                    current_game_meta=""
+                    prev_meta=False
                 if not game_filter(gdata): #TODO add filter function form param
-                    if prev_meta:
-                        current_game_meta=""
-                        prev_meta=False
                     continue
                 try:
-                    hist=_parse_single_pgn(line)
+                    hist=_parse_single_pgn(gdata.pgn)
                     val, moveI = funct(hist) #scanAll(hist, funct)
                     #gdata.data=funct(hist) #scanAll(hist, funct)
                     gdata.data=val
                     gdata.length=moveI
-                    print("success line {0}".format(lI))
+                    print("success line {0}".format(lI-1))
                     yield gdata
 
 #                    if prev_meta:
 #                        current_game_meta=""
 #                        prev_meta=False
                     total_games_success=total_games_success+1
-                    maxL=line
+                    #maxL=line
                 except AssertionError as err:
-                    print("Error parse line {0} cause {1}".format(lI, err))
+                    print("Error parse line {0} cause {1}".format(lI-1, err))
                     total_games_errors=total_games_errors+1
                 if prev_meta:
                     current_game_meta=""
@@ -249,8 +265,8 @@ def main():
 
     #The sort of collect data of the game:    
     #functGame=lambda hist: scanFinishPosition(hist, aggregate_count) # get last position, count of figure
-    #functGame=scanCoastSumm # scan all positions, average figure by timeline
-    functGame=scanMoveCount
+    functGame=scanCoastSumm # scan all positions, average figure by timeline
+    #functGame=scanMoveCount
 
     resultIter = process_file_PGN(file_name_pgn, functGame)
     
@@ -278,7 +294,6 @@ if __name__ == '__main__':
     main()
 
 
-#TODO: perfomance optimization
 
 #Excel/OpenOffice: https://wiki.openoffice.org/wiki/Documentation/How_Tos/Calc:_LINEST_function
 #LINEST(yvalues; xvalues; allow_const; stats) =ЛИНЕЙН(C$2:C$5;A$2:B$5;1;1)  Ctrl+Shift+Enter
