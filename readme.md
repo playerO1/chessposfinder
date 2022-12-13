@@ -132,10 +132,10 @@ See data collection function choose code:
 
 ## Research result
 
-"Pre-print" result on 30.01.2022:
+"Pre-print" result on 30.11.2022:
 
 1. The wining is not depends of number of moving figure.
-2. Classic figure weight is near true.
+2. Classic figure weight is near true. But accuracy of my result is not good.
 
 
 # Usefull links
