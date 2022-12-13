@@ -139,7 +139,7 @@ def game_filter(gdata:GData):
     if ((gdata.elo_W+gdata.elo_B)/2<600): return False
     if (len(gdata.pgn)<10): return False
     #if (time_control > 30)
-    if (gdata.result==0): return False
+    #if (gdata.result==0): return False
     return True
 
 import re #reg expression
