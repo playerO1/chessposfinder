@@ -137,6 +137,22 @@ See data collection function choose code:
 1. The wining is not depends of number of moving figure.
 2. Classic figure weight is near true. But accuracy of my result is not good.
 
+2022-12-31 finish math on one of lichess.com tournament data. It is 7850 game of blitz tournament; player average Elo is 1854 (min 716, max 2720).
+It was strange result of linear regression:
+
+|const|Pawn|kNight|Rook|Bishop|Queen|
+|---|---|---|---|---|---|
+0.5993|0.2387|0.3410|0.2041|0.1222|0.0363
+0.0201|0.0148|0.0155|0.0160|0.0066|0.0098
+0.2077|0.8639||||
+411.6186|7850.0000||||
+1536.0368|5858.7685||||
+
+'const' - the white has less hight win percentage that black figure (on this data is on 0.036 more win).
+
+For this table used Open Ofice function "=LINEAR(C$2:C$7857;O$2:S$7857;1;1)".
+The Queen may be have low priority, cause eat other figure (knight, bishop, rock) and it take dependence with each other variable.
+
 
 # Usefull links
 You can download same PGN from:
