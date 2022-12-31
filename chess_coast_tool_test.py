@@ -134,6 +134,29 @@ check_equals(({'p': 1, 'r': 0, 'n': 0, 'b': 0, 'q': 1, 'k': 0, 'P': 2, 'R': 0, '
 #TODO test scanMoveCount with difference values
 
 
+print("Test scanLastPosition,aggregate_count 21.1")
+pgn="f3 e6 g4 Qh4# 0-1"
+hist = chess_coast_tool._parse_single_pgn(pgn)
+functGame=lambda hist: chess_coast_tool.scanLastPosition(hist, chess_coast_tool.aggregate_count, n=3)
+check_equals(({'p': 8, 'r': 2, 'n': 2, 'b': 2, 'q': 1, 'k': 1, 'P': 8, 'R': 2, 'N': 2, 'B': 2, 'Q': 1, 'K': 1}, 1), functGame(hist), 'Math of game, 21.1')
+
+print("Test scanLastPosition,aggregate_count 21.2")
+pgn="f3 e6 g4 Qh4# 0-1"
+hist = chess_coast_tool._parse_single_pgn(pgn)
+functGame=lambda hist: chess_coast_tool.scanLastPosition(hist, chess_coast_tool.aggregate_count, n=1)
+check_equals(({'p': 8, 'r': 2, 'n': 2, 'b': 2, 'q': 1, 'k': 1, 'P': 8, 'R': 2, 'N': 2, 'B': 2, 'Q': 1, 'K': 1}, 3), functGame(hist), 'test, 21.2')
+
+print("Test scanLastPosition,aggregate_count 21.3")
+pgn="1. e4 e5 2. d4 Nc6 3. d5 Nd4 4. Nf3 Nxf3+ 5. Qxf3 d6 6. Nc3 Nf6 7. Bb5+ Bd7 8. Bd3 g6 9. h3 Bg7 10. Bg5 Qe7 11. Nb5 Bxb5 12. Bxb5+ Kf8 13. h4 a6 14. Bd3 Nh5 15. Bxe7+ Kxe7 1-0"
+hist = chess_coast_tool._parse_single_pgn(pgn)
+functGame=lambda hist: chess_coast_tool.scanLastPosition(hist, chess_coast_tool.aggregate_count, n=1)
+check_equals(({'p': 8, 'r': 2, 'n': 1, 'b': 1, 'q': 0, 'k': 1, 'P': 8, 'R': 2, 'N': 0, 'B': 2, 'Q': 1, 'K': 1}, 29), functGame(hist), 'test, 21.3')
+
+print("Test scanLastPosition,aggregate_count 21.4")
+pgn="1. e4 e5 2. d4 Nc6 3. d5 Nd4 4. Nf3 Nxf3+ 5. Qxf3 d6 6. Nc3 Nf6 7. Bb5+ Bd7 8. Bd3 g6 9. h3 Bg7 10. Bg5 Qe7 11. Nb5 Bxb5 12. Bxb5+ Kf8 13. h4 a6 14. Bd3 Nh5 15. Bxe7+ Kxe7 1-0"
+hist = chess_coast_tool._parse_single_pgn(pgn)
+functGame=lambda hist: chess_coast_tool.scanLastPosition(hist, chess_coast_tool.aggregate_count, n=2)
+check_equals(({'p': 8, 'r': 2, 'n': 1, 'b': 1, 'q': 1, 'k': 1, 'P': 8, 'R': 2, 'N': 0, 'B': 2, 'Q': 1, 'K': 1}, 28), functGame(hist), 'test, 21.4')
 
 
 
