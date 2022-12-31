@@ -91,6 +91,23 @@ def scanMoveCount(hist):
         lastI=lastI+1
     return count, lastI
 
+def scanLastPosition(hist, funct, n:int=1): # hist=_parse_single_pgn(gameFEN), funct=match_koef_razmen_any(pos)
+    maxV=float('-inf')
+    maxI=0
+    lastNP=[]
+    size=0
+    for p,m in hist:
+        size=size+1
+        lastNP.append(p)
+        if len(lastNP)>n: lastNP.pop(0)
+    i=size-len(lastNP) #TODO check -1 or 0 offset?
+    #print(i, " ", size, len(lastNP))
+    p=lastNP[0] # lastNP.pop(0)
+    maxI=i
+    maxV=funct(p,i%2==1)
+    #print("max=",maxV," at ", maxI)
+    return maxV, maxI
+
 # --------------------------
 
 
@@ -265,8 +282,9 @@ def main():
 
     #The sort of collect data of the game:    
     #functGame=lambda hist: scanFinishPosition(hist, aggregate_count) # get last position, count of figure
-    functGame=scanCoastSumm # scan all positions, average figure by timeline
+    #functGame=scanCoastSumm # scan all positions, average figure by timeline
     #functGame=scanMoveCount
+    functGame=lambda hist: scanLastPosition(hist, aggregate_count, 3)
 
     resultIter = process_file_PGN(file_name_pgn, functGame)
     
