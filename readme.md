@@ -148,10 +148,26 @@ It was strange result of linear regression:
 411.6186|7850.0000||||
 1536.0368|5858.7685||||
 
+Table 1 - chess figure coast, linear regression by end 3 move
+
 'const' - the white has less hight win percentage that black figure (on this data is on 0.036 more win).
 
 For this table used Open Ofice function "=LINEAR(C$2:C$7857;O$2:S$7857;1;1)".
 The Queen may be have low priority, cause eat other figure (knight, bishop, rock) and it take dependence with each other variable.
+
+Update 2023-01-06. After normalize time on board per figure, in previous dataset (see result of table 1) take next result (table 2):
+
+|const|Pawn|kNight|Rook|Bishop|Queen|
+|---|---|---|---|---|---|
+2.2069|0.7147|1.0625|0.6593|0.2054|0.0375
+0.0746|0.0314|0.0416|0.0322|0.0145|0.0099
+0.1921|0.8724||||
+373.2754|7850.0000||||
+1420.4364|5974.3690||||
+
+Table 2 - chess figure coast, linear regression by average figure time on chess board
+
+The pawn has more weight that many other figure. But this can be result of other figure.
 
 
 # Usefull links
