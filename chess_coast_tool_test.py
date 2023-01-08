@@ -131,7 +131,18 @@ print("Test scanMoveCount() 20.5")
 pgn="f3 e6 g4 Qh4# 0-1"
 hist = chess_coast_tool._parse_single_pgn(pgn)
 check_equals(({'p': 1, 'r': 0, 'n': 0, 'b': 0, 'q': 1, 'k': 0, 'P': 2, 'R': 0, 'N': 0, 'B': 0, 'Q': 0, 'K': 0}, 4), chess_coast_tool.scanMoveCount(hist), 'Math of game, 20.5')
-#TODO test scanMoveCount with difference values
+
+print("Test scanMoveCount() 20.6")
+pgn="1. e4 e5 2. d4 Nc6 3. d5 Nd4 4. Nf3 Nxf3+ 5. Qxf3 d6 6. Nc3 Nf6 7. Bb5+ Bd7 8. Bd3 g6 9. h3 Bg7 10. Bg5 Qe7 11. Nb5 Bxb5 12. Bxb5+ Kf8 13. h4 a6 14. Bd3 Nh5 15. Bxe7+ Kxe7 1-0"
+hist = chess_coast_tool._parse_single_pgn(pgn)
+check_equals(({'p': 4, 'r': 0, 'n': 5, 'b': 3, 'q': 1, 'k': 2, 'P': 5, 'R': 0, 'N': 3, 'B': 6, 'Q': 1, 'K': 0}, 30), chess_coast_tool.scanMoveCount(hist), 'Math of game, 20.6')
+
+
+print("Test scanEatMoveCount() 20.7")
+pgn="1. e4 e5 2. d4 Nc6 3. d5 Nd4 4. Nf3 Nxf3+ 5. Qxf3 d6 6. Nc3 Nf6 7. Bb5+ Bd7 8. Bd3 g6 9. h3 Bg7 10. Bg5 Qe7 11. Nb5 Bxb5 12. Bxb5+ Kf8 13. h4 a6 14. Bd3 Nh5 15. Bxe7+ Kxe7 1-0"
+hist = chess_coast_tool._parse_single_pgn(pgn)
+check_equals(({'P-p': 0, 'P-r': 0, 'P-n': 0, 'P-b': 0, 'P-q': 0, 'P-k': 0, 'P-.': 5, 'R-p': 0, 'R-r': 0, 'R-n': 0, 'R-b': 0, 'R-q': 0, 'R-k': 0, 'R-.': 0, 'N-p': 0, 'N-r': 0, 'N-n': 0, 'N-b': 0, 'N-q': 0, 'N-k': 0, 'N-.': 3, 'B-p': 0, 'B-r': 0, 'B-n': 0, 'B-b': 1, 'B-q': 1, 'B-k': 0, 'B-.': 4, 'Q-p': 0, 'Q-r': 0, 'Q-n': 1, 'Q-b': 0, 'Q-q': 0, 'Q-k': 0, 'Q-.': 0, 'K-p': 0, 'K-r': 0, 'K-n': 0, 'K-b': 0, 'K-q': 0, 'K-k': 0, 'K-.': 0, 'p-P': 0, 'p-R': 0, 'p-N': 0, 'p-B': 0, 'p-Q': 0, 'p-K': 0, 'p-.': 4, 'r-P': 0, 'r-R': 0, 'r-N': 0, 'r-B': 0, 'r-Q': 0, 'r-K': 0, 'r-.': 0, 'n-P': 0, 'n-R': 0, 'n-N': 1, 'n-B': 0, 'n-Q': 0, 'n-K': 0, 'n-.': 4, 'b-P': 0, 'b-R': 0, 'b-N': 1, 'b-B': 0, 'b-Q': 0, 'b-K': 0, 'b-.': 2, 'q-P': 0, 'q-R': 0, 'q-N': 0, 'q-B': 0, 'q-Q': 0, 'q-K': 0, 'q-.': 1, 'k-P': 0, 'k-R': 0, 'k-N': 0, 'k-B': 1, 'k-Q': 0, 'k-K': 0, 'k-.': 1}, 30), chess_coast_tool.scanEatMoveCount(hist), 'Math of game, 20.7')
+# {'P-.': 5, 'p-.': 4, 'n-.': 4, 'N-.': 3, 'n-N': 1, 'Q-n': 1, 'B-.': 4, 'b-.': 2, 'q-.': 1, 'b-N': 1, 'B-b': 1, 'k-.': 1, 'B-q': 1, 'k-B': 1}, 30
 
 
 print("Test scanLastPosition,aggregate_count 21.1")

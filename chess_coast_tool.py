@@ -91,6 +91,28 @@ def scanMoveCount(hist):
         lastI=lastI+1
     return count, lastI
 
+def scanEatMoveCount(hist):
+    count={}
+    USE_EAT_ALL_FULL_HEADER=True # for CSV header should be all
+    if USE_EAT_ALL_FULL_HEADER:
+        headers_W=['P','R','N','B','Q','K']
+        headers_B=['p','r','n','b','q','k']
+        headers_empty=['.']
+        #tmp_count=['p','r','n','b':'q','k',  'P','R','N','B','Q','K',  '.']
+        count={k:0 for k in [x+'-'+y for x in headers_W for y in (headers_B+headers_empty)]+[x+'-'+y for x in headers_B for y in (headers_W+headers_empty)]}
+    
+    lastI=0
+    for p,m in hist:
+        f=p.board[m[0]] + '-' + p.board[m[1]]
+        #print("test",p,m,f)
+        swapColor = lastI%2==1
+        if swapColor:
+            f = f.swapcase()
+        if not f in count: count[f]=0
+        count[f]=count[f]+1
+        lastI=lastI+1
+    return count, lastI
+
 def scanLastPosition(hist, funct, n:int=1): # hist=_parse_single_pgn(gameFEN), funct=match_koef_razmen_any(pos)
     maxV=float('-inf')
     maxI=0
@@ -282,9 +304,12 @@ def main():
 
     #The sort of collect data of the game:    
     #functGame=lambda hist: scanFinishPosition(hist, aggregate_count) # get last position, count of figure
-    #functGame=scanCoastSumm # scan all positions, average figure by timeline
+    functGame=scanCoastSumm # scan all positions, average figure by timeline
     #functGame=scanMoveCount
-    functGame=lambda hist: scanLastPosition(hist, aggregate_count, 3)
+    #functGame=scanEatMoveCount
+    #functGame=lambda hist: scanLastPosition(hist, aggregate_count, 3)
+    
+    print("Function:", functGame)
 
     resultIter = process_file_PGN(file_name_pgn, functGame)
     
